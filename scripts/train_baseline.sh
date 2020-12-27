@@ -17,6 +17,5 @@ python -m torch.distributed.launch \
     --master_port=3000 \
     shapeprop/tools/train_net.py \
     --config-file configs/bdd_yanzhao_r50.yml \
-    --local_rank 1 \
-    --num_gpu 3
+    --local_rank 1
 # Evaluate
