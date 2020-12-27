@@ -24,6 +24,14 @@ class DatasetCatalog(object):
         "coco_2017_non_voc_category_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017_non_voc_category.json"
+        },
+        "bdd100k_train": {
+            "img_dir": "/shared/xudongliu/bdd100k/10k/train",
+            "ann_file": "/shared/xudongliu/bdd100k/labels/ins_seg/ins_seg_train.json"
+        },
+        "bdd100k_val":{
+            "img_dir": "/shared/xudongliu/bdd100k/10k/val",
+            "ann_file": "/shared/xudongliu/bdd100k/labels/ins_seg/ins_seg_val.json"
         }
     }
 
@@ -38,6 +46,16 @@ class DatasetCatalog(object):
             )
             return dict(
                 factory="COCODataset",
+                args=args,
+            )
+        elif name.startswith("bdd"):
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                root=attrs["img_dir"],
+                ann_file=attrs["ann_file"]
+            )
+            return dict(
+                factory="BDD100kDataset",
                 args=args,
             )
         raise RuntimeError("Dataset not available: {}".format(name))
